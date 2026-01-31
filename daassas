@@ -49,7 +49,59 @@ set statusline+=\ %#SLLineNumber#
 set statusline+=\ LN:\ %l
 
 
+-----------------------------------------------------------------------------
+" Open Netrw on the directory of the current file
+nnoremap <leader>dd :Lexplore %:p:h<CR>
+" Toggle the Netrw window
+nnoremap <Leader>da :Lexplore<CR>
+if &columns < 90
+  " If the screen is small, occupy half
+  let g:netrw_winsize = 50
+else
+  " else take 30%
+  let g:netrw_winsize = 30
+endif
 
+" Sync current directory and browsing directory
+" This solves the problem with the 'move' command
+let g:netrw_keepdir = 0
+
+" Hide banner
+let g:netrw_banner = 0
+
+" Hide dotfiles
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+
+" A better copy command
+let g:netrw_localcopydircmd = 'cp -r'
+
+" Delete a non-empty directory
+function! NetrwRemoveRecursive()
+  if &filetype ==# 'netrw'
+    " Prepare the delete command.
+    " Make it so that is triggered by just pressing Enter
+    cnoremap <buffer> <CR> rm -r<CR>
+    " Unmark all files (don't want to delete anything by accident)
+    normal mu
+
+    " Mark the file/directory under the cursor
+    normal mf
+
+    " Show the prompt to enter the command
+    " In here you either press Enter to confirm
+    " or press ctrl + c to abort.
+    " Don't do anything else!
+    try
+      normal mx
+    catch
+      echo "Canceled"
+    endtry
+
+    " Undo the Enter keymap
+    cunmap <buffer> <CR>
+  endif
+endfunction
+-------------------------------------------------------------------------------
 
 
 

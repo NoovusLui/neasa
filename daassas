@@ -1,4 +1,31 @@
 171515
+
+vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+vim.api.nvim_create_autocmd({ "BufEnter", "ColorScheme" }, {
+  callback = function()
+    local hl = vim.api.nvim_set_hl
+
+    hl(0, "VertSplit", { bg = "#181818", fg = "#996228" })
+    hl(0, "SLBackground", { bg = "#181818", fg = "#996228" })
+    hl(0, "SLFileType", { bg = "indianred", fg = "#663333" })
+    hl(0, "SLBufNumber", { bg = "SeaGreen", fg = "#003333" })
+    hl(0, "SLLineNumber", { bg = "#80a0ff", fg = "#003366" })
+  end,
+})
+vim.o.statusline =
+  "%#SLBackground#" ..
+  " %F" ..
+  "%=" ..
+  "%#SLFileType#" ..
+  " FT: %Y " ..
+  "%#SLBufNumber#" ..
+  " BN: %n " ..
+  "%#SLLineNumber#" ..
+  " LN: %l "
+
+
+
+
 winbar=%=%m\ %F
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                STATUSLINE                                 "

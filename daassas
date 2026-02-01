@@ -1,6 +1,8 @@
 171515
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "Winseparator", { bg = "NONE" })
+
 vim.api.nvim_create_autocmd({ "BufEnter", "ColorScheme" }, {
   callback = function()
     local hl = vim.api.nvim_set_hl

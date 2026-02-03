@@ -25,6 +25,34 @@ vim.o.statusline =
   "%#SLLineNumber#" ..
   " LN: %l "
 
+_G.vim_mode = function()
+  local mode_map = {
+    ["n"]  = "NORMAL",
+    ["i"]  = "INSERT",
+    ["v"]  = "VISUAL",
+    ["V"]  = "V-LINE",
+    [""] = "V-BLOCK",
+    ["R"]  = "REPLACE",
+    ["c"]  = "COMMAND",
+    ["t"]  = "TERMINAL",
+  }
+
+  local mode = vim.api.nvim_get_mode().mode
+  return mode_map[mode] or mode
+end
+
+vim.o.statusline =
+  "%#SLMode#" ..
+  " %{v:lua.vim_mode()} " ..
+  "%#SLBackground#" ..
+  " %F" ..
+  "%=" ..
+  "%#SLFileType#" ..
+  " FT: %Y " ..
+  "%#SLBufNumber#" ..
+  " BN: %n " ..
+  "%#SLLineNumber#" ..
+  " LN: %l "
 
 
 

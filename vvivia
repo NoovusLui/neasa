@@ -1,0 +1,51 @@
+local n = function(lhs, rhs)
+	vim.keymap.set('n', lhs, rhs)
+end
+
+n('<leader>pp', function()
+	vim.print("ola")
+end)
+
+n('<leader>pwc', '<cmd>q!<cr>')
+
+
+
+--- duplicadas e desc
+local used = {}
+local opts = { silent = true }
+
+local maps = {
+  ['<leader>w']  = { '<cmd>w<cr>', desc = 'Salvar' },
+  ['<leader>q']  = { '<cmd>q<cr>', desc = 'Sair' },
+  ['<leader>pp'] = { function() vim.print("ola") end, desc = 'Print ola' },
+}
+
+for k, v in pairs(maps) do
+  if used[k] then
+    vim.notify('Keymap duplicado: ' .. k, vim.log.levels.WARN)
+  end
+  used[k] = true
+
+  if type(v) == 'table' then
+    vim.keymap.set('n', k, v[1], vim.tbl_extend('force', opts, {
+      desc = v.desc
+    }))
+  else
+    vim.keymap.set('n', k, v, opts)
+  end
+end
+
+
+
+
+
+--- normal
+local maps = {
+  ['<leader>pp'] = function() vim.print("ola") end,
+  ['<leader>w']  = '<cmd>w<cr>',
+  ['<leader>q']  = '<cmd>q<cr>',
+}
+
+for lhs, rhs in pairs(maps) do
+  vim.keymap.set('n', lhs, rhs)
+end

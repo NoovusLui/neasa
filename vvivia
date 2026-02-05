@@ -1,3 +1,35 @@
+#!/bin/bash
+
+CONF="$HOME/.config/hypr/hyprland.conf"
+
+state=$(hyprctl activewindow -j | jq -r '.floating')
+
+if [ "$state" = "true" ]; then
+    # apaga a linha 211
+    sed -i '211d' "$CONF"
+
+    hyprctl reload
+    hyprctl dispatch settiled
+else
+    # escreve max_size = 300 300 exatamente na linha 211
+    sed -i '211i\    max_size = 300 300' "$CONF"
+
+    hyprctl reload
+    hyprctl dispatch setfloating
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
 local n = function(lhs, rhs)
 	vim.keymap.set('n', lhs, rhs)
 end
